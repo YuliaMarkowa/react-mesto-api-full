@@ -1,0 +1,5 @@
+@media (max-width: 580px) {
+    .popup__close-button_type_tooltip-info {
+        right: 123px;
+    }
+}

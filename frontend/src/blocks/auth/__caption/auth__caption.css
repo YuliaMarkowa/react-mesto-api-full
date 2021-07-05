@@ -1,0 +1,8 @@
+.auth__caption {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 0,8;
+}

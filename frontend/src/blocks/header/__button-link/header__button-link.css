@@ -1,0 +1,20 @@
+.header__button-link {
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 0,8;
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: opacity .3s ease;
+}
+
+.header__button-link:hover {
+    opacity: 0.6;
+}
+
+@media (max-width: 930px) {
+    .header__button-link { 
+        font-size: 14px;     
+        margin-right: 30px;
+    }
+}

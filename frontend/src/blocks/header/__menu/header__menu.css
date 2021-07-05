@@ -1,0 +1,11 @@
+.header__menu {
+    display: flex;
+    flex-direction: space-between;
+    align-items: flex-end;
+}
+
+@media (max-width: 580px) {
+    .header__menu {
+        flex-direction: column;
+    }
+}
