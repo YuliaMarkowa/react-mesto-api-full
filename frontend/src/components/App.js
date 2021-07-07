@@ -35,6 +35,7 @@ function App() {
   const [email, setEmail] = React.useState("");
 
   React.useEffect(() => {
+    if(loggedIn) {
     api
       .loadUserInfo()
       .then((userData) => {
@@ -52,7 +53,8 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+    }
+  }, [loggedIn]);
 
   React.useEffect(() => {
     document.addEventListener("keydown", (evt) => {
