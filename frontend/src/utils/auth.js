@@ -1,7 +1,6 @@
 class Auth {
-    constructor({ baseUrl, headers }) {
+    constructor({ baseUrl }) {
       this._baseUrl = baseUrl;
-      this._headers = headers;
     }
   
     _checkResponse(res) {
@@ -14,7 +13,9 @@ class Auth {
     register(email, password) {
       return fetch(`${this._baseUrl}/signup`, {
         method: "POST",
-        headers: this._headers,
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           email: email,
           password: password,
@@ -25,7 +26,9 @@ class Auth {
     authorize(email, password) {
       return fetch(`${this._baseUrl}/signin`, {
         method: "POST",
-        headers: this._headers,
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           email: email,
           password: password,
@@ -37,8 +40,8 @@ class Auth {
       return fetch(`${this._baseUrl}/users/me`, {
         method: 'GET',
         headers: {
-          ...this._headers,
-          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
       }).then(this._checkResponse);
     }
@@ -46,9 +49,6 @@ class Auth {
 
   const auth = new Auth({
     baseUrl: "https://api.yulia.students.nomoredomains.club",
-    headers: {
-      "Content-Type": "application/json",
-    },
   });
   
   export default auth;

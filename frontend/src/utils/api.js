@@ -1,14 +1,13 @@
 class Api {
-    constructor({ baseUrl, headers }) {
+    constructor({ baseUrl }) {
       this._baseUrl = baseUrl;
-      this._headers = headers;
     }
   
     loadUserInfo(token) {
       return fetch(`${this._baseUrl}/users/me`, {
         headers: {
-          ...this._headers,
-          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
       }).then(this._checkResponse);
     }
@@ -16,36 +15,36 @@ class Api {
     getInitialCards(token) {
       return fetch(`${this._baseUrl}/cards`, {
         headers: {
-          ...this._headers,
-          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
       }).then(this._checkResponse);
     }
   
-    editProfile(token, data) {
+    editProfile(token, name, about) {
       return fetch(`${this._baseUrl}/users/me`, {
         method: "PATCH",
         headers: {
-          ...this._headers,
-          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          name: data.name,
-          about: data.about,
+          name: name,
+          about: about,
         }),
       }).then(this._checkResponse);
     }
   
-    addNewCard(token, data) {
+    addNewCard(token, name, link) {
       return fetch(`${this._baseUrl}/cards`, {
         method: "POST",
         headers: {
-          ...this._headers,
-          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          name: data.name,
-          link: data.link,
+          name: name,
+          link: link,
         }),
       }).then(this._checkResponse);
     }
@@ -54,8 +53,8 @@ class Api {
       return fetch(`${this._baseUrl}/cards/${id}`, {
         method: "DELETE",
         headers: {
-          ...this._headers,
-          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
       }).then(this._checkResponse);
     }
@@ -64,8 +63,8 @@ class Api {
       return fetch(`${this._baseUrl}/cards/likes/${id}`, {
         method: "PUT",
         headers: {
-          ...this._headers,
-          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
       }).then(this._checkResponse);
     }
@@ -74,21 +73,21 @@ class Api {
       return fetch(`${this._baseUrl}/cards/likes/${id}`, {
         method: "DELETE",
         headers: {
-          ...this._headers,
-          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
       }).then(this._checkResponse);
     }
   
-    editAvatar(token, data) {
+    editAvatar(token, link) {
       return fetch(`${this._baseUrl}/users/me/avatar`, {
         method: "PATCH",
         headers: {
-          ...this._headers,
-          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          avatar: data.link,
+          avatar: link,
         }),
       }).then(this._checkResponse);
     }
@@ -109,9 +108,6 @@ class Api {
 
   const api = new Api({
     baseUrl: "https://api.yulia.students.nomoredomains.club",
-    headers: {
-      "Content-Type": "application/json",
-    },
   });
 
   export default api;
