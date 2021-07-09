@@ -23,13 +23,9 @@ const allowedCors = [
   'http://yulia.students.nomoredomains.club',
 ];
 
-app.use((req, res, next) => {
-  const { origin } = req.headers;
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-  next();
-});
+app.use(cors({
+  origin: allowedCors,
+}));
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
@@ -37,8 +33,6 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
-
-app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
