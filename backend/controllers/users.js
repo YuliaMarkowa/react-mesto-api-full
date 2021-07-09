@@ -67,6 +67,8 @@ const createUser = (req, res, next) => {
         throw new BadRequestError('Данные не прошли валидацию');
       } else if (err.name === 'MongoError' && err.code === 11000) {
         throw new ConflictingRequestError('Такая почта уже есть');
+      } else {
+        next(err);
       }
     })
     .catch(next);
@@ -93,6 +95,8 @@ const updateUserBio = (req, res, next) => {
         throw new BadRequestError('Данные не прошли валидацию');
       } else if (err.name === 'CastError') {
         throw new BadRequestError('Данные не прошли валидацию');
+      } else {
+        next(err);
       }
     })
     .catch(next);
@@ -119,6 +123,8 @@ const updateAvatar = (req, res, next) => {
         throw new BadRequestError('Данные не прошли валидацию');
       } else if (err.name === 'CastError') {
         throw new BadRequestError('Данные не прошли валидацию');
+      } else {
+        next(err);
       }
     })
     .catch(next);

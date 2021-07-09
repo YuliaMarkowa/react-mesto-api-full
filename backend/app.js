@@ -13,6 +13,8 @@ const usersRouter = require('./routes/users');
 const { auth } = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
+const NotFoundError = require('./errors/not-found-err');
+
 const { PORT = 3000 } = process.env;
 const app = express();
 
@@ -39,23 +41,26 @@ app.get('/crash-test', () => {
 app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(6).pattern(/^[a-zA-Z0-9]{6,}$/)
-      .trim(),
+    password: Joi.string().required(),
   }),
 }), login);
 
 app.post('/signup', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(6).pattern(/^[a-zA-Z0-9]{6,}$/)
-      .trim(),
+    password: Joi.string().required(),
+    name: Joi.string().min(2).max(30),
+    about: Joi.string().min(2).max(30),
+    avatar: Joi.string().pattern(/http(s)?:\/\/w{0,3}?[a-zA-Z0-9]+[a-zA-Z0-9\-._~:/?#[\]@!$&'()*+,;=]*/),
   }),
 }), createUser);
 
 app.use('/', auth, cardsRouter);
 app.use('/', auth, usersRouter);
 
-app.all('*', (req, res) => res.status(404).send({ message: 'Запрашиваемая страница не найдена' }));
+app.use('*', (req, res, next) => {
+  next(new NotFoundError('Запрашиваемая страница не найдена'));
+});
 
 app.use(errorLogger);
 
