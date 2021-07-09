@@ -20,7 +20,7 @@ const app = express();
 
 const allowedCors = [
   'https://yulia.students.nomoredomains.club',
-  'http://api.yulia.students.nomoredomains.club',
+  'http://yulia.students.nomoredomains.club',
 ];
 
 app.use((req, res, next) => {
