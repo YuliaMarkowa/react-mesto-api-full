@@ -36,19 +36,19 @@ class Auth {
       }).then(this._checkResponse);
     }
   
-    getContent(token) {
+    getContent() {
       return fetch(`${this._baseUrl}/users/me`, {
         method: 'GET',
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
       }).then(this._checkResponse);
     }
   }
 
   const auth = new Auth({
-    baseUrl: "https://api.yulia.students.nomoredomains.club",
+    baseUrl: "http://localhost:3005",
   });
   
   export default auth;

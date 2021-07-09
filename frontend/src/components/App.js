@@ -65,7 +65,7 @@ function App() {
   }, []);
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((like) => like._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
     api
       .changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
@@ -81,7 +81,7 @@ function App() {
   function handleCardConfirmRemove(card) {
     setIsLoading(true)
     api
-      .removeCard(card._id)
+      .removeCard(card)
       .then(() => {
         setCards((cards) => cards.filter((item) => item._id !== card._id));
         closeAllPopups();
@@ -184,6 +184,7 @@ function checkUserToken() {
     auth
       .getContent(token)
       .then((res) => {
+        console.log(res);
         if (res) {
           setLoggedIn(true);
           setEmail(res.email);

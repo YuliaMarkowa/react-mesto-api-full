@@ -3,91 +3,91 @@ class Api {
       this._baseUrl = baseUrl;
     }
   
-    loadUserInfo(token) {
+    loadUserInfo() {
       return fetch(`${this._baseUrl}/users/me`, {
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
       }).then(this._checkResponse);
     }
   
-    getInitialCards(token) {
+    getInitialCards() {
       return fetch(`${this._baseUrl}/cards`, {
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
       }).then(this._checkResponse);
     }
   
-    editProfile(token, name, about) {
+    editProfile(data) {
       return fetch(`${this._baseUrl}/users/me`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
         body: JSON.stringify({
-          name: name,
-          about: about,
+          name: data.name,
+          about: data.about,
         }),
       }).then(this._checkResponse);
     }
   
-    addNewCard(token, name, link) {
+    addNewCard(data) {
       return fetch(`${this._baseUrl}/cards`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
         body: JSON.stringify({
-          name: name,
-          link: link,
+          name: data.name,
+          link: data.link,
         }),
       }).then(this._checkResponse);
     }
   
-    removeCard(token, id) {
-      return fetch(`${this._baseUrl}/cards/${id}`, {
+    removeCard(card) {
+      return fetch(`${this._baseUrl}/cards/${card._id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
       }).then(this._checkResponse);
     }
   
-    setLikeCard(token, id) {
-      return fetch(`${this._baseUrl}/cards/likes/${id}`, {
+    setLikeCard(card) {
+      return fetch(`${this._baseUrl}/cards/${card._id}/likes`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
       }).then(this._checkResponse);
     }
   
-    removeLikeCard(token, id) {
-      return fetch(`${this._baseUrl}/cards/likes/${id}`, {
+    removeLikeCard(card) {
+      return fetch(`${this._baseUrl}/cards/${card._id}/likes`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
       }).then(this._checkResponse);
     }
   
-    editAvatar(token, link) {
+    editAvatar(data) {
       return fetch(`${this._baseUrl}/users/me/avatar`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
         body: JSON.stringify({
-          avatar: link,
+          avatar: data.link,
         }),
       }).then(this._checkResponse);
     }
@@ -99,15 +99,19 @@ class Api {
       return Promise.reject(`Ошибка ${res.status}`);
     }
 
-    changeLikeCardStatus(token, id, isLiked) {
-      return !isLiked
-        ? this.removeLikeCard(token, id)
-        : this.setLikeCard(token, id)
-  }
+    changeLikeCardStatus(id, isLiked) {
+      return fetch(`${this._baseUrl}/cards/${id}/likes`, {
+        method: isLiked ? 'PUT' : 'DELETE',
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      }).then(this._checkResponse);
+   }
 }
 
   const api = new Api({
-    baseUrl: "https://api.yulia.students.nomoredomains.club",
+    baseUrl: "http://localhost:3005",
   });
 
   export default api;
