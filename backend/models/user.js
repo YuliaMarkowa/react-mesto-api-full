@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    default: 'http://risovach.ru/upload/2021/03/generator/zhak-eliasen-fransua-mari-paganel_266149217_orig_.jpg',
+    default: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
     validate: {
       validator(v) {
         return /http(s)?:\/\/w{0,3}?[a-zA-Z0-9]+[a-zA-Z0-9\-._~:/?#[\]@!$&'()*+,;=]*/.test(v);
