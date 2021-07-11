@@ -13,8 +13,8 @@ usersRouter.get('/users', loadUsers);
 usersRouter.get('/users/me', loadActualUser);
 
 usersRouter.get('/users/:id', celebrate({
-  body: Joi.object().keys({
-    id: Joi.string().required().min(24),
+  params: Joi.object().keys({
+    id: Joi.string().required().min(24).hex(),
   }),
 }), loadUserId);
 
