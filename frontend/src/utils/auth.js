@@ -48,7 +48,7 @@ class Auth {
   }
 
   const auth = new Auth({
-    baseUrl: "https://api.yulia.students.nomoredomains.club",
+    baseUrl: "http://localhost:5000",
   });
   
   export default auth;

@@ -111,7 +111,7 @@ class Api {
 }
 
   const api = new Api({
-    baseUrl: "https://api.yulia.students.nomoredomains.club",
+    baseUrl: "http://localhost:5000",
   });
 
   export default api;

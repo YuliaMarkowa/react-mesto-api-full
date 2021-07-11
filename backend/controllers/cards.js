@@ -56,8 +56,9 @@ const removeCard = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'CastError') {
         throw new BadRequestError('Неправильный запрос');
+      } else {
+        next(err);
       }
-      next(err);
     })
     .catch(next);
 };

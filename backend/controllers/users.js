@@ -35,11 +35,11 @@ const loadUserId = (req, res, next) => {
 
 const loadActualUser = (req, res, next) => {
   User.findById(req.user._id)
-    .then((data) => {
-      if (!data) {
+    .then((user) => {
+      if (!user) {
         throw new NotFoundError('Пользователь не найден');
       }
-      res.status(200).send(data);
+      res.status(200).send(user);
     })
     .catch(next);
 };
